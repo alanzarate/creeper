@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import Enum
 @dataclass
 class Attributes:
     desc: str
@@ -12,8 +13,8 @@ class Coord(Enum):
     GENERAL_CLOSE = Attributes("Button to close everithing", 1232, 181)
 
     SECTION_XML = Attributes("section xml", 731,245)
-    XML_SELECT_FILE_BTN = Attributes("Button for select file for XML", 1162,304)
-    TMP_SELECT_FILE_BTN = Attributes("Button to select the file .tmp", 1166, 358)
+    XML_SELECT_FILE_BTN = Attributes("Button for select file for XML", 1162,358)
+    TMP_SELECT_FILE_BTN = Attributes("Button to select the file .tmp", 1166, 304)
     ENCRYPT_BTN = Attributes("Button to encrypt the file", 716,397)
     DECRYPT_BTN = Attributes("Button to decrypt the .tmp", 822,397)
     ECU_INFORMATION_BTN = Attributes("Button to open dialog with ecu Information", 943, 397)

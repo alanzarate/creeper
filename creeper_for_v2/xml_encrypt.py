@@ -1,14 +1,15 @@
 import json
 import pyautogui as pa
 import os
-from entities import Coord, Attributes 
+from creeper_for_v2.entities import Coord, Attributes 
 import shutil
 import time
+
  
 
 
 def moveAndClick(x, y, duration = 0):
-    #pa.moveTo(x, y, duration)
+    #pa.moveTo(x, y, durattion)
     pa.click(x = x, y = y, )
 
 def moveAndDoubleClick(x, y, duration = 0):
@@ -21,7 +22,7 @@ def moveClickAndWrite(x, y, string = "", duration = 0):
 def selectFromFiles(coord1, coord2, path, fileStr):
     moveClickAndWrite(
             x = coord1.x,
-            y = coord2.y,
+            y = coord1.y,
             string = path
         )
     pa.press('enter')
@@ -34,11 +35,19 @@ def selectFromFiles(coord1, coord2, path, fileStr):
     pa.press('enter')
 
 
-def init():
-    json_file_path = "actions.json"
-    with open(json_file_path, 'r') as json_file:
-        data_dict = json.load(json_file)
 
+
+def aux(s):
+    time.sleep(4)
+    print("STEP ==== ", s)
+     
+def init(intructions):
+     
+    # json_file_path = "actions.json"
+    # with open(json_file_path, 'r') as json_file:
+    #     data_dict = json.load(json_file)
+    # WHEN the instruictions is already in a map
+    data_dict = intructions
     if data_dict['action'] == "ENCRYPT":
         ## is to encrypt xmlfile
         filename = data_dict['fileName']
@@ -49,105 +58,116 @@ def init():
 
         ## copy the xml that is in input to output also copy the mdb 
 
-        shutil.copyfile( f"{os.getcwd()}\\input\\{xml_name}", f"{os.getcwd()}\\output\\{data_dict['fileName']}\\.xml")
+        shutil.copyfile( f"{os.getcwd()}\\input\\{xml_name}", f"{os.getcwd()}\\output\\{data_dict['fileName']}.xml")
         shutil.copyfile(f"{os.getcwd()}\\constant_files\\intersto.mdb", f"{os.getcwd()}\\output\\intersto.mdb")
-
+        
+        aux(1)
         ## end of copy
         moveAndClick(
             x = Coord.XML_SELECT_FILE_BTN.x,
             y = Coord.XML_SELECT_FILE_BTN.y )
-        
+        aux(2)
 
         selectFromFiles(coord1 = Coord.SEARCH_DIRECTORY_INPUT, 
                         coord2 =  Coord.FILENAME_INPUT,
                         path = f"{os.getcwd()}\\output", 
                         fileStr = f"{data_dict['newXmlFileName']}" )
 
-        
-        
+        aux(3)
+         
         #load database
         moveAndClick(
             x = Coord.INSERSTO_SECTION_TAB.x,
             y = Coord.INSERSTO_SECTION_TAB.y )
-
+        aux(4)
         moveAndClick(
-            x = Coord.INSERSTO_SECTION_TAB.x,
-            y = Coord.INSERSTO_SECTION_TAB.y )
+            x = Coord.SELECT_MDB_BTN.x,
+            y = Coord.SELECT_MDB_BTN.y )
+        aux(5)
 
         selectFromFiles(coord1 = Coord.SEARCH_DIRECTORY_INPUT, 
                         coord2 =  Coord.FILENAME_INPUT,
                         path = f"{os.getcwd()}\\output", 
                         fileStr = "intersto.mdb" )
-        
+        aux(6)
         moveClickAndWrite(
         x = Coord.MDB_CLIENT_ID_FIELD.x , 
         y = Coord.MDB_CLIENT_ID_FIELD.y, 
         string = data_dict['clientId'],
         )
-
+        aux(7)
         moveClickAndWrite(
         x = Coord.MDB_DEALER_ID_FIELD.x , 
         y = Coord.MDB_DEALER_ID_FIELD.y, 
         string = data_dict['dealerId'],
         )
+        aux(8)
         moveClickAndWrite(
         x = Coord.MDB_USER_ID_FIELD.x , 
         y = Coord.MDB_USER_ID_FIELD.y, 
         string = data_dict['userId'],
         )
+        aux(9)
 
         moveAndDoubleClick(x = Coord.MDB_DATE_RECEIVED_FIELD.x, 
         y  = Coord.MDB_DATE_RECEIVED_FIELD.y)
-
+        
+        aux(10)
         #pa.press('backspace')
         pa.write(f"{data_dict['month']}/{data_dict['day']}/{data_dict['year']}")
-
+        aux(11)
         moveAndClick(
             x = Coord.MDB_XML_LOCATION_FIELD.x,
             y = Coord.MDB_XML_LOCATION_FIELD.y )
-        
-        for i in range(13):
+        aux(12)
+        for i in range(20):
             pa.doubleClick()
+            time.sleep(1)
             pa.press('backspace')
+            time.sleep(1)
+        aux(13)    
         pa.write(data_dict['routeTmp'])
-
+        aux(14)
         moveAndClick(
             x = Coord.SAVE_UPDATE_BTN.x,
             y = Coord.SAVE_UPDATE_BTN.y )
         time.sleep(1.5)
-
+        aux(15)
+        time.sleep(4)
         # back to xml section
         moveAndClick(
             x = Coord.SECTION_XML.x,
             y = Coord.SECTION_XML.y )
-        
+        aux(16)
         moveClickAndWrite(
         x = Coord.CLIENT_ID_INPUT.x , 
         y = Coord.CLIENT_ID_INPUT.y, 
         string = data_dict['clientId'],
         )
-
+        aux(17)
         moveClickAndWrite(
         x = Coord.DEALER_ID_INPUT.x , 
         y = Coord.DEALER_ID_INPUT.y, 
         string = data_dict['dealerId'],
         )
 
-
+        aux(18)
         moveAndClick(
             x = Coord.DATE_INPUT_FIELD.x,
             y = Coord.DATE_INPUT_FIELD.y )
         
-        for i in range(13):
-            pa.doubleClick()
+        for i in range(150):
+            #pa.doubleClick()
             pa.press('backspace')
-
+            time.sleep(0.1)
+        aux(19)
         pa.write(f"{data_dict['year']}-{data_dict['month']}-{data_dict['day']}")
-
+        aux(20)
         #encrypt
         moveAndClick(
             x = Coord.ENCRYPT_BTN.x,
             y = Coord.ENCRYPT_BTN.y )
+        aux(21)
         time.sleep(1.5)
 
         
