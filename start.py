@@ -7,7 +7,7 @@ import creeper_for_v2.main as mainV2
 MINIO_URL = "192.168.100.28:9000"
 ACCESS_KEY = "bUXfpLrKqeGxDAnTaC7z"
 SECRET_KEY = "IJVnBbUwiM2kq2j9bz8vGADv16hOIzncyPs9iGlE"
-
+BUCKET_WRITED = "creeper-output"
 
 def uploadFilesToMinio(bucketName, objectsPath:list): # list of tuples
     minio_client = Minio(
@@ -65,7 +65,20 @@ def __init__():
             if os.path.isfile(relativePath):
                 # the file was downloaded correctly
                 print("The files was correctly downloaded")
-                mainV2.main2(fileToDownload)
+                mainV2.main(fileToDownload)
+                #mainV2.main2(fileToDownload)
+                tmpFile =  f"{os.getcwd()}\\creeper_for_v2\\output\\{fileToDownload['fileName']}.tmp"
+                if os.path.isfile(tmpFile):
+                    print("TMP file was generated correctly")
+                    interstoDB =   f"{os.getcwd()}\\creeper_for_v2\\output\\intersto.mdb"
+                    
+                    listToUpload = [
+                        (f"/{instructions['activity']}/{instructions['activityId']}/{fileToDownload['fileName']}.tmp", tmpFile ),
+                        (f"/{instructions['activity']}/{instructions['activityId']}/intersto.mdb", interstoDB)
+                    ]
+                    uploadFilesToMinio(BUCKET_WRITED, listToUpload)
+
+                
             else:
                 print("The file wasn't downloaded")
 

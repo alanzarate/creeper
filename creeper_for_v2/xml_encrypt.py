@@ -38,7 +38,7 @@ def selectFromFiles(coord1, coord2, path, fileStr):
 
 
 def aux(s):
-    time.sleep(4)
+    time.sleep(1)
     print("STEP ==== ", s)
      
 def init(intructions):
@@ -53,14 +53,18 @@ def init(intructions):
         filename = data_dict['fileName']
         path_tmp = data_dict['routeTmp']
         xml_name = data_dict['xmlName']
+        rootPath = os.getcwd()
+        rootPath_creperV2 = rootPath + "\\creeper_for_v2"
+        xmp_path = f"{rootPath_creperV2}\\input\\{xml_name}"
 
-        xmp_path = f"{os.getcwd()}\\input\\{xml_name}"
-
+        if not os.path.exists(f"{rootPath_creperV2}\\output" ):
+            os.makedirs(f"{rootPath_creperV2}\\output")
         ## copy the xml that is in input to output also copy the mdb 
-
-        shutil.copyfile( f"{os.getcwd()}\\input\\{xml_name}", f"{os.getcwd()}\\output\\{data_dict['fileName']}.xml")
-        shutil.copyfile(f"{os.getcwd()}\\constant_files\\intersto.mdb", f"{os.getcwd()}\\output\\intersto.mdb")
-        
+        print("AQUI 1", xml_name)
+        shutil.copy( f"{rootPath_creperV2}\\input\\{xml_name}", f"{rootPath_creperV2}\\output\\{data_dict['newXmlFileName']}")
+        print("AQUI 2")
+        shutil.copy(f"{rootPath_creperV2}\\constant_files\\intersto.mdb", f"{rootPath_creperV2}\\output\\intersto.mdb")
+        print("AQUI 3")
         aux(1)
         ## end of copy
         moveAndClick(
@@ -70,7 +74,7 @@ def init(intructions):
 
         selectFromFiles(coord1 = Coord.SEARCH_DIRECTORY_INPUT, 
                         coord2 =  Coord.FILENAME_INPUT,
-                        path = f"{os.getcwd()}\\output", 
+                        path = f"{rootPath_creperV2}\\output", 
                         fileStr = f"{data_dict['newXmlFileName']}" )
 
         aux(3)
@@ -87,7 +91,7 @@ def init(intructions):
 
         selectFromFiles(coord1 = Coord.SEARCH_DIRECTORY_INPUT, 
                         coord2 =  Coord.FILENAME_INPUT,
-                        path = f"{os.getcwd()}\\output", 
+                        path = f"{rootPath_creperV2}\\output", 
                         fileStr = "intersto.mdb" )
         aux(6)
         moveClickAndWrite(
@@ -122,18 +126,18 @@ def init(intructions):
         aux(12)
         for i in range(20):
             pa.doubleClick()
-            time.sleep(1)
+            time.sleep(0.1)
             pa.press('backspace')
-            time.sleep(1)
+            
         aux(13)    
         pa.write(data_dict['routeTmp'])
         aux(14)
         moveAndClick(
             x = Coord.SAVE_UPDATE_BTN.x,
             y = Coord.SAVE_UPDATE_BTN.y )
-        time.sleep(1.5)
+         
         aux(15)
-        time.sleep(4)
+        time.sleep(3)
         # back to xml section
         moveAndClick(
             x = Coord.SECTION_XML.x,
@@ -156,10 +160,10 @@ def init(intructions):
             x = Coord.DATE_INPUT_FIELD.x,
             y = Coord.DATE_INPUT_FIELD.y )
         
-        for i in range(150):
-            #pa.doubleClick()
+        for i in range(50):
+            pa.doubleClick()
             pa.press('backspace')
-            time.sleep(0.1)
+            time.sleep(0.01)
         aux(19)
         pa.write(f"{data_dict['year']}-{data_dict['month']}-{data_dict['day']}")
         aux(20)
