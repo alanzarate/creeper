@@ -1,6 +1,10 @@
 # conda env export | grep -v "^prefix: " > environment.yml
 # conda remove -n ENV_NAME --all
+# conda config --append channels conda-forge
 # conda env create -f environment.yml
+
+# conda create --name creeper_codetruck python=3.10.14
+# conda install nb_conda_kernels ipykernel
 name: creeper_codetruck
 channels:
   - defaults
