@@ -21,3 +21,28 @@
         }
     ]
 }
+
+
+
+{
+    "activityId": "ashdohqwiuh12-123123jb-123l12n3k",
+    "activity": "LOAD-INFO-XML-V2",
+    "data": [
+        {
+            "downloadFrom": "URL",
+            "action": "LOAD-INFO-XML-V2",
+            "fileName": "9sadhkah823n-12803nkansd90-asdl",
+            "routeTmp": "",
+            "xmlName": "D415.tmp.xml",
+            "newXmlFileName": "",
+            "clientId": "",
+            "dealerId": "",
+            "userId": "",
+            "year": "",
+            "month": "",
+            "day": "",
+
+            
+        }
+    ]
+}
